@@ -1,3 +1,5 @@
+## This project is a work in progress (31/10/2023)
+
 # Air Miles Data Seed
 
 This project seeds a PSQL DB with data regarding the amount of air miles/points required to travel to destinations from London.
