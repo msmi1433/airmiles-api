@@ -1,0 +1,20 @@
+{
+  "main": "listen.js",
+  "name": "airmiles-seed",
+  "description": "This project seeds a PSQL DB with data regarding the amount of air miles/points required to travel to destinations from London.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Myles Smith",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "pg-format": "^1.0.4"
+  }
+}
