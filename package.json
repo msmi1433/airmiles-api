@@ -3,9 +3,13 @@
   "name": "airmiles-seed",
   "description": "This project seeds a PSQL DB with data regarding the amount of air miles/points required to travel to destinations from London.",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "test": "test"
+    "setup-dbs": "psql -f ./db/setup.sql",
+    "seed": "psql -f ./db/seeds/seed.sql",
+    "test": "jest",
+    "prepare": "husky install",
+    "start": "node listen.js",
+    "seed-prod": "NODE_ENV=production npm run seed"
   },
   "author": "Myles Smith",
   "license": "ISC",
