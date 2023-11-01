@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS air_miles_test;
 DROP DATABASE IF EXISTS air_miles;
 
+CREATE DATABASE air_miles_test;
 CREATE DATABASE air_miles;
