@@ -8,16 +8,16 @@ exports.selectAllDestinations = (
   let queryString = `SELECT * FROM british_airways`;
   let queryArray = [];
 
-  if (isNaN(limit)) {
+  if (isNaN(Number(limit))) {
     return Promise.reject({
-      status: 400,
+      status: 404,
       msg: "limit must be a number",
     });
   }
 
   if (!["economy", "p_economy", "business", undefined].includes(travel_class)) {
     return Promise.reject({
-      status: 400,
+      status: 404,
       msg: "invalid travel class",
     });
   }

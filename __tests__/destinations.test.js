@@ -34,6 +34,14 @@ describe("GET: Destinations", () => {
       });
   });
   describe("GET destinations queries", () => {
+    test("200: can set a custom limit", () => {
+      return request(app)
+        .get("/api/destinations?limit=5")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.destinations.length).toBe(5);
+        });
+    });
     test("200: responds with destinations below queried points amount in economy(op)", () => {
       return request(app)
         .get("/api/destinations?points_balance=23457")
@@ -44,16 +52,31 @@ describe("GET: Destinations", () => {
           });
         });
     });
-  });
-  test("200: can be queried by travel class and points available", () => {
-    return request(app)
-      .get("/api/destinations?travel_class=business&points_balance=78000")
-      .expect(200)
-      .then(({ body }) => {
-        body.destinations.forEach((destination) => {
-          console.log(destination);
-          expect(destination.business_op).toBeLessThanOrEqual(78000);
+    test("200: can be queried by travel class and points available", () => {
+      return request(app)
+        .get("/api/destinations?travel_class=business&points_balance=78000")
+        .expect(200)
+        .then(({ body }) => {
+          body.destinations.forEach((destination) => {
+            expect(destination.business_op).toBeLessThanOrEqual(78000);
+          });
         });
-      });
+    });
+    test("404: errors when invalid travel class queried", () => {
+      return request(app)
+        .get("/api/destinations?travel_class=apple")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("invalid travel class");
+        });
+    });
+    test("404: errors when NaN given for limit", () => {
+      return request(app)
+        .get("/api/destinations?limit=cake")
+        .expect(404)
+        .then(({ body }) => {
+          expect(body.msg).toBe("limit must be a number");
+        });
+    });
   });
 });
