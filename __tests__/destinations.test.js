@@ -33,4 +33,27 @@ describe("GET: Destinations", () => {
         expect(body.destinations.length).toBe(20);
       });
   });
+  describe("GET destinations queries", () => {
+    test("200: responds with destinations below queried points amount in economy(op)", () => {
+      return request(app)
+        .get("/api/destinations?points_balance=23457")
+        .expect(200)
+        .then(({ body }) => {
+          body.destinations.forEach((destination) => {
+            expect(destination.economy_op).toBeLessThanOrEqual(23457);
+          });
+        });
+    });
+  });
+  test("200: can be queried by travel class and points available", () => {
+    return request(app)
+      .get("/api/destinations?travel_class=business&points_balance=78000")
+      .expect(200)
+      .then(({ body }) => {
+        body.destinations.forEach((destination) => {
+          console.log(destination);
+          expect(destination.business_op).toBeLessThanOrEqual(78000);
+        });
+      });
+  });
 });
