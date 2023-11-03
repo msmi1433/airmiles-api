@@ -1,16 +1,13 @@
 const db = require("../connection");
+const fs = require("node:fs");
+const { from: copyFrom } = require("pg-copy-streams");
+const { pipeline } = require("node:stream/promises");
 
-const seed = () => {
-  return db
-    .query("DROP TABLE IF EXISTS british_airways CASCADE;")
-    .then(() => {
-      return db.query("DROP TABLE IF EXISTS users CASCADE;");
-    })
-    .then(() => {
-      return db.query("DROP TABLE IF EXISTS users_ba_destinations;");
-    })
-    .then(() => {
-      return db.query(`
+const seed = async () => {
+  await db.query("DROP TABLE IF EXISTS british_airways CASCADE;");
+  await db.query("DROP TABLE IF EXISTS users CASCADE;");
+  await db.query("DROP TABLE IF EXISTS users_ba_destinations;");
+  await db.query(`
     CREATE TABLE british_airways (
         id SERIAL PRIMARY KEY,
         city VARCHAR,
@@ -22,36 +19,32 @@ const seed = () => {
         business_op INT,
         business_p INT
     );`);
-    })
-    .then(() => {
-      return db.query(`
+  await db.query(`
         CREATE TABLE users (
             id SERIAL PRIMARY KEY,
             username VARCHAR,
             password_hash VARCHAR
         );`);
-    })
-    .then(() => {
-      return db.query(`
+  await db.query(`
         CREATE TABLE users_ba_destinations (
             id SERIAL PRIMARY KEY,
             user_id INT REFERENCES users(id),
             destination_id INT REFERENCES british_airways(id)
         );`);
-    })
-    .then(() => {
-      return db.query(`
-        COPY british_airways(
-            city,
-            country,
-            economy_op,
-            economy_p,
-            p_economy_op,
-            p_economy_p,
-            business_op,
-            business_p) 
-        FROM '${__dirname}/../data/bachart.csv' DELIMITER ',' CSV HEADER;`);
-    });
+  const client = await db.connect();
+  try {
+    const ingestStream = client.query(
+      copyFrom(`COPY british_airways 
+      (city, country, economy_op, economy_p, p_economy_op, p_economy_p, business_op, business_p) 
+      FROM STDIN DELIMITER ',' CSV HEADER;`)
+    );
+    const sourceStream = fs.createReadStream(
+      `${__dirname}/../data/bachart.csv`
+    );
+    await pipeline(sourceStream, ingestStream);
+  } finally {
+    client.release();
+  }
 };
 
 module.exports = seed;
