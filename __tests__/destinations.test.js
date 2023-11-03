@@ -70,7 +70,7 @@ describe("GET: Destinations", () => {
           expect(body.msg).toBe("invalid travel class");
         });
     });
-    test("404: errors when NaN given for limit", () => {
+    test("404: errors when non-numeric given for limit", () => {
       return request(app)
         .get("/api/destinations?limit=cake")
         .expect(404)
