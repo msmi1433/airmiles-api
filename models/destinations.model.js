@@ -3,7 +3,8 @@ const db = require("../db/connection");
 exports.selectAllDestinations = (
   points_balance = undefined,
   travel_class = undefined,
-  limit = 20
+  limit = 20,
+  page = 1
 ) => {
   let queryString = `SELECT * FROM british_airways`;
   let queryArray = [];
@@ -42,7 +43,7 @@ exports.selectAllDestinations = (
     queryArray.push(points_balance);
   }
 
-  queryString += ` LIMIT ${limit};`;
+  queryString += ` LIMIT ${limit} OFFSET ${(page - 1) * limit};`;
 
   return db.query(queryString, queryArray).then(({ rows }) => {
     return rows;

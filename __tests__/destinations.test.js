@@ -78,5 +78,13 @@ describe("GET: Destinations", () => {
           expect(body.msg).toBe("limit must be a number");
         });
     });
+    test("200: pagination works as expected", () => {
+      return request(app)
+        .get("/api/destinations?page=2")
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.destinations[0].city).toBe("Beijing");
+        });
+    });
   });
 });
