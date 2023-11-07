@@ -56,5 +56,29 @@ exports.selectAllDestinations = async (
   queryString += ` LIMIT ${limit} OFFSET ${(page - 1) * limit};`;
 
   const { rows } = await db.query(queryString, queryArray);
-  return rows;
+
+  if (points_balance) {
+    rows.forEach((row) => {
+      for (let key in row) {
+        if (
+          (typeof row[key] == "number" &&
+            key !== "id" &&
+            row[key] > +points_balance) ||
+          row[key] === null
+        ) {
+          delete row[key];
+        }
+      }
+    });
+    return rows;
+  } else {
+    rows.forEach((row) => {
+      for (let key in row) {
+        if (row[key] === null) {
+          delete row[key];
+        }
+      }
+    });
+    return rows;
+  }
 };

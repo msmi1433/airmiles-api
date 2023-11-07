@@ -26,14 +26,12 @@ describe("GET: /api/destinations", () => {
       .then(({ body }) => {
         expect(Array.isArray(body.destinations)).toBe(true);
         body.destinations.forEach((destination) => {
+          expect(destination).toHaveProperty("id");
           expect(destination).toHaveProperty("city");
           expect(destination).toHaveProperty("country");
-          expect(destination).toHaveProperty("economy_op");
-          expect(destination).toHaveProperty("economy_p");
-          expect(destination).toHaveProperty("p_economy_op");
-          expect(destination).toHaveProperty("p_economy_p");
-          expect(destination).toHaveProperty("business_op");
-          expect(destination).toHaveProperty("business_p");
+          for (let key in destination) {
+            expect(destination[key]).not.toBe(null);
+          }
         });
       });
   });
@@ -70,7 +68,6 @@ describe("GET: /api/destinations", () => {
         .expect(200)
         .then(({ body }) => {
           body.destinations.forEach((destination) => {
-            console.log(destination);
             expect(destination.p_economy_op).not.toBe(null);
           });
         });

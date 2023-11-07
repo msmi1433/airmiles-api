@@ -1,4 +1,5 @@
 const express = require("express");
+const helmet = require("helmet");
 
 const app = express();
 
@@ -7,6 +8,8 @@ const {
   customErrorHandler,
   getEndpoints,
 } = require("./controllers");
+
+app.use(helmet());
 
 app.get("/api", getEndpoints);
 app.get("/api/destinations", getAllDestinations);
