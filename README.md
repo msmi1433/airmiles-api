@@ -24,7 +24,7 @@ The hosted API in its current form can be accessed [here](https://airmiles-api.o
 
 - Serves up an array of all destination objects
   - Queries (example query: "/api/destinations?points_balance=30000&travel_class=business")
-    - **points_balance** : Can be queried with integers. Will serve up destinations where ticket in any class costs less than the points balance queried.
+    - **points_balance** : Can be queried with integers. Will serve up destinations where a ticket in any class costs less than the points balance queried.
     - **travel_class**: Can be queried with 'economy', 'p_economy' and 'business'. Returns destinations with fares available in queried class. Combine with a points_balance query to return destinations where points balance can afford a seat in queried class.
     - **limit**: Can be queried with integers. Limits amount of results served to the queried number - defaults to 20 results.
     - **page** - Can be queried with integers. Specifies page of results to return; default page size is 20 results, but this can be modified using limit query.
