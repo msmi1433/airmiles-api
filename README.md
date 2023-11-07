@@ -4,7 +4,7 @@
 
 This project provides a REST API that enables users to unlock the potential of their accrued air miles/points.
 
-The API interacts with a database that holds information regarding how many air miles/points are required to travel to all destinations served by British Airways from London, in multiple classes of travel.
+The API interacts with a database that holds information regarding how many air miles/points are required to travel to all destinations served by British Airways from London Heathrow, in multiple classes of travel.
 
 The project is currently focussed on UK airlines, and support for Virgin Atlantic flights will be added once an MVP for the full project is complete (using British Airways' pricing data).
 
