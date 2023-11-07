@@ -1,3 +1,4 @@
 const { getAllDestinations } = require("./destinations.controller");
 const { customErrorHandler } = require("./errors.controller");
-module.exports = { getAllDestinations, customErrorHandler };
+const { getEndpoints } = require("./endpoints.controller");
+module.exports = { getAllDestinations, customErrorHandler, getEndpoints };

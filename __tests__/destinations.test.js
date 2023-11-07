@@ -6,7 +6,19 @@ const db = require("../db/connection");
 beforeEach(() => seed());
 afterAll(() => db.end());
 
-describe("GET: Destinations", () => {
+describe("GET: /api", () => {
+  test("200: Serves up a list of available endpoints", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.endpoints).toHaveProperty("GET '/api'");
+        expect(body.endpoints).toHaveProperty("GET '/api/destinations'");
+      });
+  });
+});
+
+describe("GET: /api/destinations", () => {
   test("200: responds with an array of correctly shaped objects", () => {
     return request(app)
       .get("/api/destinations")
@@ -49,6 +61,17 @@ describe("GET: Destinations", () => {
         .then(({ body }) => {
           body.destinations.forEach((destination) => {
             expect(destination.economy_op).toBeLessThanOrEqual(23457);
+          });
+        });
+    });
+    test("200: can be queried by travel class", () => {
+      return request(app)
+        .get("/api/destinations?travel_class=p_economy")
+        .expect(200)
+        .then(({ body }) => {
+          body.destinations.forEach((destination) => {
+            console.log(destination);
+            expect(destination.p_economy_op).not.toBe(null);
           });
         });
     });

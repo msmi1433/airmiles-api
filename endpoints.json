@@ -1,0 +1,30 @@
+{
+  "GET '/api'": {
+    "description": "Serves up a list of all endpoints and their queries"
+  },
+  "GET '/api/destinations'": {
+    "description": "Serves up an array of all destination objects",
+    "queries": {
+      "points_balance": "Can be queried with integers. Will serve up destinations where an economy off-peak ticket costs less than the points balance queried.",
+      "travel_class": "Can be queried with 'economy', 'p_economy' and 'business'. Returns destinations with fares available in queried class. Combine with a points_balance query to return destinations where points balance can afford a seat in queried class.",
+      "limit": "Can be queried with integers. Limits amount of results served to the queried number - defaults to 20 results.",
+      "page": "Can be queried with integers. Specifies page of results to return; default page size is 20 results, but this can be modified using the limit query."
+    },
+    "exampleResponse": {
+      "destinations": [
+        {
+          "id": 1,
+          "city": "Aberdeen",
+          "country": "Scotland",
+          "economy_op": 9250,
+          "economy_p": 9750,
+          "p_economy_op": null,
+          "p_economy_p": null,
+          "business_op": 15000,
+          "business_p": 16250
+        },
+        "..."
+      ]
+    }
+  }
+}

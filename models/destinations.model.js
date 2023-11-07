@@ -1,6 +1,6 @@
 const db = require("../db/connection");
 
-exports.selectAllDestinations = (
+exports.selectAllDestinations = async (
   points_balance = undefined,
   travel_class = undefined,
   limit = 20,
@@ -26,9 +26,7 @@ exports.selectAllDestinations = (
   if (points_balance && !travel_class) {
     queryString += " WHERE economy_op <= $1";
     queryArray.push(points_balance);
-  }
-
-  if (points_balance && travel_class) {
+  } else if (points_balance && travel_class) {
     switch (travel_class) {
       case "economy":
         queryString += " WHERE economy_op <= $1";
@@ -41,11 +39,22 @@ exports.selectAllDestinations = (
         break;
     }
     queryArray.push(points_balance);
+  } else if (!points_balance && travel_class) {
+    switch (travel_class) {
+      case "economy":
+        queryString += " WHERE economy_op IS NOT NULL";
+        break;
+      case "p_economy":
+        queryString += " WHERE p_economy_op IS NOT NULL";
+        break;
+      case "business":
+        queryString += " WHERE business_op IS NOT NULL";
+        break;
+    }
   }
 
   queryString += ` LIMIT ${limit} OFFSET ${(page - 1) * limit};`;
 
-  return db.query(queryString, queryArray).then(({ rows }) => {
-    return rows;
-  });
+  const { rows } = await db.query(queryString, queryArray);
+  return rows;
 };
