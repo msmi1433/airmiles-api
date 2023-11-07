@@ -10,6 +10,8 @@ The project is currently focussed on UK airlines, and support for Virgin Atlanti
 
 ## Hosted API
 
+**Please note** - The API is hosted using Render and spins down after periods of inactivity. Please allow a minute or two for the server to spin up if you are not receiving a response.
+
 The hosted API in its current form can be accessed [here](https://airmiles-api.onrender.com/api).
 
 ## Endpoints
