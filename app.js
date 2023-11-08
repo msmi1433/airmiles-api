@@ -1,5 +1,6 @@
 const express = require("express");
 const helmet = require("helmet");
+const cors = require("cors");
 
 const app = express();
 
@@ -10,6 +11,7 @@ const {
 } = require("./controllers");
 
 app.use(helmet());
+app.use(cors());
 
 app.get("/api", getEndpoints);
 app.get("/api/destinations", getAllDestinations);
