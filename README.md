@@ -71,6 +71,12 @@ They should be formatted as:
 
 Please contact me for guidance on how to set these files up if required.
 
+## Tech stack
+
+- Express
+- PSQL
+- Node
+
 ## Minimum requirements
 
 Please ensure that you are running the below versions or higher:
