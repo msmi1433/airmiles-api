@@ -1,18 +1,20 @@
-## This project is a work in progress (07/11/2023)
-
 # Air Miles API
 
 This project provides a REST API that enables users to unlock the potential of their accrued air miles/points.
 
 The API interacts with a database that holds information regarding how many air miles/points are required to travel to all destinations served by British Airways from London, in multiple classes of travel.
 
-The project is currently focussed on UK airlines, and support for Virgin Atlantic flights will be added once an MVP for the full project is complete (using British Airways' pricing data).
+The project is currently focussed on UK airlines, and support for Virgin Atlantic flights will be added once an MVP for the full project is complete.
 
 ## Hosted API
 
 **Please note** - The API is hosted using Render and spins down after periods of inactivity. Please allow a minute or two for the server to spin up if you are not receiving a response.
 
 The hosted API in its current form can be accessed [here](https://airmiles-api.onrender.com/api).
+
+## Hosted frontend
+
+The frontend for this project can be accessed [here](https://milesmate.vercel.app/).
 
 ## Endpoints
 
@@ -83,9 +85,3 @@ Please ensure that you are running the below versions or higher:
 
 - Node: v20.3.1
 - PSQL: v15.3
-
-## Future
-
-Once the API is complete, I will be building a frontend that allows users to enter the amount of air miles/points they have, and see a recommended list of places they can travel to using their points.
-
-The frontend will also contain a chatbot that gives users tips on how to best secure reward/air miles seats with airlines, and an accounts feature that allows users to track their progress towards a points goal for a given trip.
